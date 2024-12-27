@@ -1,0 +1,27 @@
+name: Terraform Deploy
+
+on:
+  # Trigger when any .tf file changes inside the terraform/ directory
+  push:
+    paths:
+      - 'terraform/**/*.tf'  # Match any .tf file inside the terraform directory
+
+  # Trigger when a PR is merged into the main branch
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+jobs:
+  Plan:
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu to run the job
+
+    steps:
+
+      - name: "setup- code checkout"
+        uses: actions/checkout@v3
+
+      - name: "Set up Terraform"
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
